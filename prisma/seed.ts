@@ -1,8 +1,11 @@
 import { PrismaClient } from "../src/generated/prisma/client";
-import { PrismaNeonHttp } from "@prisma/adapter-neon";
+import { PrismaNeon } from "@prisma/adapter-neon";
+import { neonConfig } from "@neondatabase/serverless";
+import ws from "ws";
 import bcrypt from "bcryptjs";
 
-const adapter = new PrismaNeonHttp(process.env.DATABASE_URL!, {});
+neonConfig.webSocketConstructor = ws;
+const adapter = new PrismaNeon({ connectionString: process.env.DATABASE_URL! });
 const db = new PrismaClient({ adapter });
 
 async function main() {
