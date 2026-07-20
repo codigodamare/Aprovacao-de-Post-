@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portal de Aprovação — Agência de Marketing
 
-## Getting Started
+Site para a agência publicar os posts do mês (imagem/vídeo + legenda + data) e o
+cliente aprovar ou comentar diretamente na tela, com a agência vendo a resposta
+automaticamente.
 
-First, run the development server:
+## Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Next.js (App Router) + TypeScript + Tailwind
+- Prisma + Postgres (recomendado: [Neon](https://neon.tech), gratuito)
+- Upload de mídia via [Vercel Blob](https://vercel.com/docs/storage/vercel-blob)
+- Autenticação própria (bcrypt + cookie de sessão assinado)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Rodando localmente
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Crie um banco gratuito no [Neon](https://neon.tech) e copie a "connection string".
+2. Crie um Blob store no [dashboard da Vercel](https://vercel.com/dashboard) → Storage → Blob, e copie o token `BLOB_READ_WRITE_TOKEN`.
+3. Cole os dois valores no arquivo `.env` (`DATABASE_URL` e `BLOB_READ_WRITE_TOKEN`).
+4. Instale as dependências e aplique o schema no banco:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+   ```bash
+   npm install
+   npx prisma migrate dev --name init
+   npm run seed
+   ```
 
-## Learn More
+5. Rode o servidor:
 
-To learn more about Next.js, take a look at the following resources:
+   ```bash
+   npm run dev
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+6. Acesse [http://localhost:3000](http://localhost:3000).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   - Agência: `agencia@suaagencia.com` / `agencia123`
+   - Cliente (Tik Dèia): `tikdeia@cliente.com` / `tikdeia123`
 
-## Deploy on Vercel
+   (Troque essas senhas antes de usar com clientes reais — edite `prisma/seed.ts`
+   ou crie usuários diretamente no banco.)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deploy (Vercel)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Suba este repositório para o GitHub.
+2. Importe o repositório em [vercel.com/new](https://vercel.com/new).
+3. Na Vercel, adicione um Postgres (Neon) e um Blob store ao projeto — isso
+   preenche `DATABASE_URL` e `BLOB_READ_WRITE_TOKEN` automaticamente.
+4. Adicione a variável `JWT_SECRET` (qualquer string longa e aleatória).
+5. Depois do primeiro deploy, rode as migrações e o seed contra o banco de
+   produção (uma vez, localmente, apontando o `.env` para a `DATABASE_URL` de
+   produção):
+
+   ```bash
+   npx prisma migrate deploy
+   npm run seed
+   ```
+
+6. Pronto — o site estará no ar em `https://seu-projeto.vercel.app` (dá pra
+   trocar por um domínio próprio depois, nas configurações do projeto na Vercel).

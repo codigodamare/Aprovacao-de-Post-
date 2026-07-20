@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { db } from "@/lib/db";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminHomePage() {
   const clients = await db.client.findMany({
     orderBy: { name: "asc" },
