@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  AGENCY
+  CLIENT
+}
+
+enum MediaType {
+  IMAGE
+  VIDEO
+}
+
+enum PostStatus {
+  PENDING
+  APPROVED
+  CHANGES_REQUESTED
+}
+
+model Client {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  createdAt DateTime @default(now())
+
+  users User[]
+  posts Post[]
+}
+
+model User {
+  id           String  @id @default(cuid())
+  email        String  @unique
+  passwordHash String
+  role         Role
+  client       Client? @relation(fields: [clientId], references: [id])
+  clientId     String?
+
+  comments Comment[]
+}
+
+model Post {
+  id            String     @id @default(cuid())
+  client        Client     @relation(fields: [clientId], references: [id])
+  clientId      String
+  mediaUrl      String
+  mediaType     MediaType
+  caption       String
+  scheduledDate DateTime
+  status        PostStatus @default(PENDING)
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  comments Comment[]
+}
+
+model Comment {
+  id         String   @id @default(cuid())
+  post       Post     @relation(fields: [postId], references: [id])
+  postId     String
+  author     User     @relation(fields: [authorId], references: [id])
+  authorId   String
+  authorRole Role
+  text       String
+  createdAt  DateTime @default(now())
+}
