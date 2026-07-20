@@ -45,6 +45,3 @@ next-env.d.ts
 # database
 /dev.db
 /dev.db-journal
-
-# uploaded media
-/public/uploads

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800">
+  <rect width="800" height="800" fill="#4A5D23"/>
+  <circle cx="250" cy="300" r="90" fill="#C1272D"/>
+  <circle cx="450" cy="260" r="70" fill="#D4A017"/>
+  <circle cx="380" cy="450" r="100" fill="#e8b93a"/>
+  <text x="400" y="700" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" fill="#FFFFFF">Ingredientes Frescos — placeholder</text>
+</svg>
