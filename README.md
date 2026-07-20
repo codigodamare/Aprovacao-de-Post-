@@ -33,7 +33,7 @@ automaticamente.
 6. Acesse [http://localhost:3000](http://localhost:3000).
 
    - Agência: `agencia@suaagencia.com` / `agencia123`
-   - Cliente (Tik Dèia): `tikdeia@cliente.com` / `tikdeia123`
+   - Cliente (Tik Dèia): `Tikdeia` / `Tikdeia123`
 
    (Troque essas senhas antes de usar com clientes reais — edite `prisma/seed.ts`
    ou crie usuários diretamente no banco.)

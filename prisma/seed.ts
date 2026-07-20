@@ -26,12 +26,12 @@ async function main() {
     },
   });
 
-  const clientPassword = await bcrypt.hash("tikdeia123", 10);
+  const clientPassword = await bcrypt.hash("Tikdeia123", 10);
   await db.user.upsert({
-    where: { email: "tikdeia@cliente.com" },
+    where: { email: "Tikdeia" },
     update: {},
     create: {
-      email: "tikdeia@cliente.com",
+      email: "Tikdeia",
       passwordHash: clientPassword,
       role: "CLIENT",
       clientId: client.id,
@@ -76,7 +76,7 @@ async function main() {
       where: { clientId: client.id, status: "CHANGES_REQUESTED" },
     });
     const clientUser = await db.user.findUniqueOrThrow({
-      where: { email: "tikdeia@cliente.com" },
+      where: { email: "Tikdeia" },
     });
 
     if (changesPost) {
@@ -93,7 +93,7 @@ async function main() {
 
   console.log("Seed concluído.");
   console.log("Login agência:  agencia@suaagencia.com / agencia123");
-  console.log("Login cliente:  tikdeia@cliente.com / tikdeia123");
+  console.log("Login cliente:  Tikdeia / Tikdeia123");
 }
 
 main()

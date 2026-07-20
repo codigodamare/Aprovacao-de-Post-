@@ -61,9 +61,9 @@ function LoginForm() {
         )}
 
         <label className="mb-3 block text-sm font-medium text-brand-graphite">
-          Email
+          Usuário
           <input
-            type="email"
+            type="text"
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
